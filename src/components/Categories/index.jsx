@@ -18,7 +18,7 @@ const Categories = () => {
     setOpen(false);
   };
 
-  const SubmitClientData = (data) => {
+  const SubmitCategoryData = (data) => {
     handleClose();
     dispatch(addCategoryAction(data));
   };
@@ -42,7 +42,7 @@ const Categories = () => {
           open={open}
           handleClose={handleClose}
         >
-          <AddClientForm SubmitClientData={SubmitClientData} />
+          <AddClientForm SubmitCategoryData={SubmitCategoryData} />
         </FormModal>
       )}
     </Box>
