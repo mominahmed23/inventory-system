@@ -17,20 +17,24 @@ import {
 } from "./../../redux/actions/items/index";
 
 import DeleteIcon from "@material-ui/icons/Delete";
-// import EditIcon from "@material-ui/icons/Edit";
-// import EditItemForm from "./EditItemForm";
+import EditIcon from "@material-ui/icons/Edit";
+import EditItemForm from "./EditItemForm";
 const useStyles = makeStyles((theme) => ({}));
 
-const Items = () => {
+const Items = ({submitCategoryData}) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  // const [editModal, setEditModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [editId, setEditId] = useState(null);
   const { items, categories } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleEditClose = ()=>{
+    setEditModal(false);
+  }
 
   const onDeleteClick = (id) => {
     dispatch(deleteItemAction(id));
@@ -45,6 +49,10 @@ const Items = () => {
     dispatch(addItemAction(data));
   };
 
+  const onEditClick = (id) => {
+    setEditId(id);
+    setEditModal(true)
+  } 
   return (
     <Box paddingBottom={3}>
       <Heading name="Items List" />
@@ -69,7 +77,7 @@ const Items = () => {
                 </Box>
                 <div>
                   <DeleteIcon onClick={() => onDeleteClick(item.id)} />
-                  {/* <EditIcon onClick={onEditClick} /> */}
+                  <EditIcon onClick={() => onEditClick(item.id)} />
                 </div>
               </Card>
             </Grid>
@@ -81,21 +89,28 @@ const Items = () => {
           <AddItemForm
             categories={categories}
             submitProjectData={submitProjectData}
+            submitCategoryData={submitCategoryData}
           />
         </FormModal>
       )}
+      
+{editModal && (
+  <FormModal
+    title="Edit Item"
+    open={editModal}
+    handleClose={handleEditClose}
+  >
+    <EditItemForm editId={editId} 
+    categories={categories} 
+    submitProjectData={submitProjectData}
+    submitCategoryData={submitCategoryData}
+    handleEditClose={handleEditClose}
+    />
+  </FormModal>
+)}
     </Box>
   );
 };
 
 export default Items;
 
-// {editModal && (
-//   <FormModal
-//     title="Edit Item"
-//     open={editModal}
-//     handleClose={handleEditClose}
-//   >
-//     <EditItemForm categories={categories} />
-//   </FormModal>
-// )}

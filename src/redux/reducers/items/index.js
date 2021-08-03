@@ -6,7 +6,9 @@ const itemsReducer = (state = initialState, action) => {
     case "ADD_ITEM":
       return [...state, action.payload];
     case "EDIT_ITEM":
-      return [...state, action.payload];
+      const temp2 = state.filter(item => item.id !== action.id)
+      temp2.push({itemId:action.id, ...action.payload})
+      return [...temp2];
     case "DELETE_ITEM":
       const temp = state.filter((item) => item.id !== action.payload);
       return [...temp];

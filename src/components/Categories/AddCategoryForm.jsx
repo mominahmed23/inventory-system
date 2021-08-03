@@ -3,11 +3,12 @@ import { Box, TextField, Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { generateId } from "../../utils/common";
 
-const AddCategoryForm = ({ SubmitCategoryData }) => {
+const AddCategoryForm = ({ submitCategoryData , handleClose}) => {
   const { register, handleSubmit } = useForm();
 
   const submitData = (data) => {
-    SubmitCategoryData({ ...data, ...generateId("category") });
+    submitCategoryData({ ...data, ...generateId("category") });
+    handleClose();
   };
   return (
     <form onSubmit={handleSubmit(submitData)}>

@@ -6,9 +6,8 @@ import FormModal from "../common/FormModal";
 import AddClientForm from "./AddCategoryForm";
 import { addCategoryAction } from "../../redux/actions/categories/index";
 
-const Categories = () => {
+const Categories = ({submitCategoryData}) => {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -16,11 +15,6 @@ const Categories = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const SubmitCategoryData = (data) => {
-    handleClose();
-    dispatch(addCategoryAction(data));
   };
 
   return (
@@ -42,7 +36,7 @@ const Categories = () => {
           open={open}
           handleClose={handleClose}
         >
-          <AddClientForm SubmitCategoryData={SubmitCategoryData} />
+          <AddClientForm submitCategoryData={submitCategoryData} handleClose={handleClose}/>
         </FormModal>
       )}
     </Box>
