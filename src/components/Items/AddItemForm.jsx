@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, Button, MenuItem } from "@material-ui/core";
+import { Box, TextField, Button, MenuItem, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { generateId } from "../../utils/common";
 import { useState } from "react";
@@ -30,7 +30,6 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
   };
 
   const submitData = (data) => {
-    // console.log(data);
     submitProjectData({ ...data, ...generateId("item") });
   };
   const onNewCategoryClick = () => {
@@ -38,89 +37,98 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
   };
   return(
       <div>
-      {newCategoryModel && (
-        <FormModal
-          title="Add New Category"
-          open={newCategoryModel}
-          handleClose={handleClosecategoryModal}
-        >
-          <AddCategoryForm submitCategoryData={submitCategoryData} handleClose={handleClosecategoryModal}/>
-        </FormModal>
-      )}
-      
+        {newCategoryModel && (
+          <FormModal
+            title="Add New Category"
+            open={newCategoryModel}
+            handleClose={handleClosecategoryModal}
+          >
+            <AddCategoryForm submitCategoryData={submitCategoryData} handleClose={handleClosecategoryModal}/>
+          </FormModal>
+        )}
+        
      <form onSubmit={handleSubmit(submitData)}>
-      <TextField
-       {...register("product", { required: true })}
-        // {...register("product")}
-        fullWidth
-        label="Product"
-        margin="dense"
-        variant="outlined"
-      />
+       <Grid container spacing={3}>
+         <Grid item xs={12} sm={6}>
+          <TextField
+              {...register("product", { required: true })}
+                fullWidth
+                label="Product"
+                margin="dense"
+                variant="outlined"
+              />
+            <span style={{color:"red"}}> {errors.product && 'required'}</span>
+         </Grid>
+         <Grid item xs={12}  sm={6}> 
+            <TextField
+            {...register("quantity", { required: true })}
+            fullWidth
+            label="Quantity"
+            margin="dense"
+            variant="outlined"
+          />
+          <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
+         </Grid>
+       <Grid item xs={12}  sm={6}> 
+          <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
+          <div style={{flexGrow:1,marginRight:"5px"}}>
+          <InputLabel >Category</InputLabel>
+          <Select
 
-      <span style={{color:"red"}}> {errors.product && 'required'}</span>
-      <TextField
-        {...register("quantity", { required: true })}
-        fullWidth
-        label="Quantity"
-        margin="dense"
-        variant="outlined"
-      />
-      <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
-      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
-        <div style={{flexGrow:1,marginRight:"5px"}}>
-        <InputLabel >Category</InputLabel>
-        <Select
-        
-        {...register("categoryId",{ required: true })}
+          {...register("categoryId",{ required: true })}
+
+            open={open}
+            onClose={handleCloseDropDown}
+            onOpen={handleOpenDropDown}
+          fullWidth
+
+          >
+          {categories.length ? (
+              categories.map((item) => (
+                <MenuItem value={item.id}>{item.name}</MenuItem>
+              ))
+          ) :(
+            <MenuItem value={null}>None</MenuItem>
+          )}
+
+          
+          </Select>
+          </div>
+          <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            disableElevation
+            onClick={onNewCategoryClick}
+          >
+            Add new category
+          </Button>
+          </div>
+          </div>
+          <span style={{color:"red"}}> {errors.categoryId && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          {...register("itemCode", { required: true })}
+          fullWidth
+          label="Item Code/ Bar Code"
+          margin="dense"
+          variant="outlined"
+        />
+        <span style={{color:"red"}}> {errors.itemCode && 'required'}</span>
+      </Grid>
      
-          open={open}
-          onClose={handleCloseDropDown}
-          onOpen={handleOpenDropDown}
-        fullWidth
-        
-        >
-         {categories.length ? (
-             categories.map((item) => (
-              <MenuItem value={item.id}>{item.name}</MenuItem>
-            ))
-         ) :(
-          <MenuItem value={null}>None</MenuItem>
-         )}
-        
-         
-        </Select>
-        </div>
-        <div>
-        <Button
-          variant="contained"
-          color="secondary"
-          disableElevation
-          onClick={onNewCategoryClick}
-        >
-          Add new category
-        </Button>
-        </div>
-      </div>
-
-      <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
-
-      <TextField
-        {...register("itemCode", { required: true })}
-        fullWidth
-        label="Item Code/ Bar Code"
-        margin="dense"
-        variant="outlined"
-      />
-      <span style={{color:"red"}}> {errors.itemCode && 'required'}</span>
-      <TextField
-        {...register("hsn", { required: true })}
-        fullWidth
-        label="HSN/SAC Code"
-        margin="dense"
-        variant="outlined"
-      />
-      <span style={{color:"red"}}> {errors.hsn && 'required'}</span>
+      <Grid item xs={12} sm={6}>
+          <TextField
+            {...register("hsn", { required: true })}
+            fullWidth
+            label="HSN/SAC Code"
+            margin="dense"
+            variant="outlined"
+          />
+          <span style={{color:"red"}}> {errors.hsn && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         {...register("salesPrice", { required: true })}
         fullWidth
@@ -129,6 +137,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.salesPrice && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         {...register("purchasePrice", { required: true })}
         fullWidth
@@ -137,6 +147,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.purchasePrice && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         {...register("mrp", { required: true })}
         fullWidth
@@ -145,6 +157,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.mrp && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         {...register("discount", { required: true })}
         fullWidth
@@ -153,6 +167,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.discount && 'required'}</span>
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         {...register("texSlab", { required: true })}
         fullWidth
@@ -161,7 +177,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.texSlab && 'required'}</span>
-
+          </Grid>
+          <Grid item xs={12} sm={12}>
       <TextField
         {...register("comment")}
         fullWidth
@@ -170,9 +187,12 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         margin="dense"
         variant="outlined"
       />
-      <Box marginY={3}>
+       </Grid>
+      
+      </Grid>
+      <Box marginY={3} textAlign="right">
         <Button
-          fullWidth
+          
           type="submit"
           variant="contained"
           color="primary"
@@ -189,3 +209,4 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
 };
 
 export default AddItemForm;
+

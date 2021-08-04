@@ -27,7 +27,7 @@ const Categories = ({submitCategoryData}) => {
           disableElevation
           onClick={handleClickOpen}
         >
-          +Add
+          +Add Category
         </Button>
       </Box>
       {open && (

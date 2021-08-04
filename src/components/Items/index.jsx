@@ -19,9 +19,28 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import EditItemForm from "./EditItemForm";
-const useStyles = makeStyles((theme) => ({}));
 
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+
+const useStyles = makeStyles((theme) => ({}));
+const useStylesTable = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 const Items = ({submitCategoryData}) => {
+
+  const colums =[
+    {field:"product",
+  headerName:"Product"}
+  ];
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -53,6 +72,7 @@ const Items = ({submitCategoryData}) => {
     setEditId(id);
     setEditModal(true)
   } 
+  const classesTable = useStylesTable();
   return (
     <Box paddingBottom={3}>
       <Heading name="Items List" />
@@ -67,7 +87,36 @@ const Items = ({submitCategoryData}) => {
           +Add
         </Button>
       </Box>
-      {!!items.length && (
+      <TableContainer className={classesTable.table} component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead style={{backgroundColor:"#cecece"}}>
+          <TableRow>
+            <TableCell  align="center">Podcut</TableCell>
+            <TableCell  align="center">Quantity</TableCell>
+            <TableCell  align="center">Sales Price</TableCell>
+            <TableCell  align="center">Purchase Price</TableCell>
+            <TableCell  align="center">Discount</TableCell>
+            <TableCell  align="right">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {items.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell align="center">{item.product}</TableCell>
+              <TableCell  align="center">{item.quantity}</TableCell>
+              <TableCell  align="center">{item.salesPrice}</TableCell>
+              <TableCell  align="center">{item.purchasePrice}</TableCell>
+              <TableCell  align="center">{item.discount}</TableCell>
+              <TableCell align="right">
+                <DeleteIcon onClick={()=>onDeleteClick(item.id)}/>
+                <EditIcon onClick={()=>onEditClick(item.id)}/>    
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+      {/* {!!items.length && (
         <Grid container spacing={1}>
             <Grid item sm={24} md={12} lg={12} justify="center" >
               <div style={{display:"flex",padding:"5px"}}>
@@ -121,11 +170,15 @@ const Items = ({submitCategoryData}) => {
                     <Box paddingY={1} paddingX={3} marginX={5}>
                       <Typography variant="h6">{item.purchasePrice}</Typography>
                     </Box>
+                    <Box paddingY={1} paddingX={3} marginX={5}>
+                    <DeleteIcon onClick={()=>onDeleteClick(item.id)}/>
+                      <EditIcon onClick={()=>onEditClick(item.id)}/>
+                    </Box>
                   </div>
-                  <div>
+                  {/* <div>
                       <DeleteIcon onClick={()=>onDeleteClick(item.id)}/>
                       <EditIcon onClick={()=>onEditClick(item.id)}/>
-                  </div>
+                  </div> 
 
                 </Card>
               </div>
@@ -133,7 +186,7 @@ const Items = ({submitCategoryData}) => {
             </Grid>
         </Grid>
         )}
-     
+      */}
       
       {open && (
         <FormModal title="Add New Item" open={open} handleClose={handleClose}>
