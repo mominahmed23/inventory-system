@@ -68,22 +68,73 @@ const Items = ({submitCategoryData}) => {
         </Button>
       </Box>
       {!!items.length && (
-        <Grid container spacing={2}>
-          {items.map((item) => (
-            <Grid item sm={6} md={4} lg={3} key={item.id}>
-              <Card className={classes.card}>
-                <Box paddingY={1} paddingX={3}>
-                  <Typography variant="h6">{item.product}</Typography>
-                </Box>
-                <div>
-                  <DeleteIcon onClick={() => onDeleteClick(item.id)} />
-                  <EditIcon onClick={() => onEditClick(item.id)} />
+        <Grid container spacing={1}>
+            <Grid item sm={24} md={12} lg={12} justify="center" >
+              <div style={{display:"flex",padding:"5px"}}>
+              <Card  
+              style={{display:"flex",padding:"0px",backgroundColor:"#cecece"}}
+              >
+                <div style={{display:"flex",paddingBottom:"0px"}}>
+                <Box paddingY={1} paddingX={3} marginX={4}>
+                    <Typography variant="h6">{"product"}</Typography>
+                  </Box>
+                  <Box paddingY={1} paddingX={3} marginX={0}>
+                    <Typography variant="h6">{"quantity"}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={0}>
+                    <Typography variant="h6">{"Category"}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={8}>
+                    <Typography variant="h6">{"S. Price"}</Typography>
+                  </Box>
+                  <Box paddingY={1} paddingX={3} marginX={0}>
+                    <Typography variant="h6">{"P. Price"}</Typography>
+                  </Box>
+                  <Box paddingY={1} paddingX={3} marginX={0}>
+                    <Typography variant="h6">{"Actions"}</Typography>
+                  </Box>
                 </div>
+                <div >
+                
+                </div>
+
               </Card>
+              </div>
             </Grid>
-          ))}
+            <Grid item sm={24} md={12} lg={12} justify="center" >
+            {items.map((item) => (
+              <div style={{display:"flex",padding:"10px"}}>
+                <Card  style={{display:"flex",padding:"10px"}}>
+                  <div style={{display:"flex",padding:"10px"}}>
+                    <Box paddingY={1} paddingX={3} marginX={3}>
+                      <Typography variant="h6">{item.product}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={2}>
+                      <Typography variant="h6">{item.quantity}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={4}>
+                      <Typography variant="h6">{item.categoryId}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={8}>
+                      <Typography variant="h6">{item.salesPrice}</Typography>
+                    </Box>
+                    <Box paddingY={1} paddingX={3} marginX={5}>
+                      <Typography variant="h6">{item.purchasePrice}</Typography>
+                    </Box>
+                  </div>
+                  <div>
+                      <DeleteIcon onClick={()=>onDeleteClick(item.id)}/>
+                      <EditIcon onClick={()=>onEditClick(item.id)}/>
+                  </div>
+
+                </Card>
+              </div>
+              ))}
+            </Grid>
         </Grid>
-      )}
+        )}
+     
+      
       {open && (
         <FormModal title="Add New Item" open={open} handleClose={handleClose}>
           <AddItemForm
@@ -94,20 +145,20 @@ const Items = ({submitCategoryData}) => {
         </FormModal>
       )}
       
-{editModal && (
-  <FormModal
-    title="Edit Item"
-    open={editModal}
-    handleClose={handleEditClose}
-  >
-    <EditItemForm editId={editId} 
-    categories={categories} 
-    submitProjectData={submitProjectData}
-    submitCategoryData={submitCategoryData}
-    handleEditClose={handleEditClose}
-    />
-  </FormModal>
-)}
+        {editModal && (
+          <FormModal
+            title="Edit Item"
+            open={editModal}
+            handleClose={handleEditClose}
+          >
+            <EditItemForm editId={editId} 
+            categories={categories} 
+            submitProjectData={submitProjectData}
+            submitCategoryData={submitCategoryData}
+            handleEditClose={handleEditClose}
+            />
+          </FormModal>
+        )}
     </Box>
   );
 };

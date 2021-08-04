@@ -70,7 +70,7 @@ const submitData = (data) => {
       defaultValue={itemData.quantity}
     />
     <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
-      <div style={{flexGrow:1}}>
+      <div style={{flexGrow:1,marginRight:"5px"}}>
       <InputLabel >Category</InputLabel>
       <Select
       {...register("categoryId")}
@@ -92,7 +92,14 @@ const submitData = (data) => {
       </Select>
       </div>
       <div>
-      <Button type="primary" onClick={onNewCategoryClick}>add new category</Button> 
+      <Button
+          variant="contained"
+          color="secondary"
+          disableElevation
+          onClick={onNewCategoryClick}
+        >
+          Add new category
+        </Button>
       </div>
     </div>
  

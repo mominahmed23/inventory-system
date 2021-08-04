@@ -9,6 +9,7 @@ const FormModal = ({ open, handleClose, title, children }) => {
         <Typography align="center" variant="h5">
           {title}
         </Typography>
+        <hr color="#cecece"/>
       </Box>
 
       <Box paddingY={2} paddingX={4}>

@@ -68,7 +68,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
       />
       <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
       <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
-        <div style={{flexGrow:1}}>
+        <div style={{flexGrow:1,marginRight:"5px"}}>
         <InputLabel >Category</InputLabel>
         <Select
         
@@ -92,13 +92,18 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         </Select>
         </div>
         <div>
-        <Button type="primary" onClick={onNewCategoryClick}>add new category</Button> 
+        <Button
+          variant="contained"
+          color="secondary"
+          disableElevation
+          onClick={onNewCategoryClick}
+        >
+          Add new category
+        </Button>
         </div>
       </div>
-   
 
-
-      
+      <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
 
       <TextField
         {...register("itemCode", { required: true })}
@@ -151,13 +156,20 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
       <TextField
         {...register("texSlab", { required: true })}
         fullWidth
-        multiline
         label="Tex Slab"
         margin="dense"
         variant="outlined"
       />
       <span style={{color:"red"}}> {errors.texSlab && 'required'}</span>
 
+      <TextField
+        {...register("comment")}
+        fullWidth
+        multiline
+        label="Comments"
+        margin="dense"
+        variant="outlined"
+      />
       <Box marginY={3}>
         <Button
           fullWidth
