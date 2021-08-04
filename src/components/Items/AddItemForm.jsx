@@ -7,17 +7,22 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormModal from "../common/FormModal";
 import AddCategoryForm from "../Categories/AddCategoryForm";
-
+import * as yup from "yup";
 const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
-  const { register, formState: { errors }, handleSubmit } = useForm();
+
+  const validationSchema = yup.object({
+    product: yup.string().required("Required"),
+    lastName: yup.string().required("Required")
+  });
+  
+
+  const preLoadedvalues ={
+    product:"product" 
+  }
+  const {register, formState: { errors }, handleSubmit } = useForm();
   const [newCategoryModel, setNewCategoryModel] = useState(false)
 
   const [open, setOpen] = React.useState(false);
-
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
-
   const handleCloseDropDown = () => {
     setOpen(false);
   };
@@ -31,6 +36,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
 
   const submitData = (data) => {
     submitProjectData({ ...data, ...generateId("item") });
+    console.log(data)
   };
   const onNewCategoryClick = () => {
     setNewCategoryModel(true);
@@ -56,6 +62,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
                 label="Product"
                 margin="dense"
                 variant="outlined"
+                name="product"
+                type="text"
               />
             <span style={{color:"red"}}> {errors.product && 'required'}</span>
          </Grid>
@@ -66,6 +74,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
             label="Quantity"
             margin="dense"
             variant="outlined"
+            type="number"
           />
           <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
          </Grid>
@@ -125,6 +134,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
             label="HSN/SAC Code"
             margin="dense"
             variant="outlined"
+
           />
           <span style={{color:"red"}}> {errors.hsn && 'required'}</span>
       </Grid>
@@ -135,6 +145,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         label="Sales Price"
         margin="dense"
         variant="outlined"
+        type="number"
       />
       <span style={{color:"red"}}> {errors.salesPrice && 'required'}</span>
       </Grid>
@@ -145,6 +156,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         label="Purchase Price"
         margin="dense"
         variant="outlined"
+        type="number"
       />
       <span style={{color:"red"}}> {errors.purchasePrice && 'required'}</span>
       </Grid>
@@ -155,6 +167,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         label="MRP"
         margin="dense"
         variant="outlined"
+        type="number"
       />
       <span style={{color:"red"}}> {errors.mrp && 'required'}</span>
       </Grid>
@@ -165,6 +178,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
         label="Discount"
         margin="dense"
         variant="outlined"
+        type="number"
       />
       <span style={{color:"red"}}> {errors.discount && 'required'}</span>
       </Grid>
