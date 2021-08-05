@@ -78,42 +78,42 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
           />
           <span style={{color:"red"}}> {errors.quantity && 'required'}</span>
          </Grid>
-       <Grid item xs={12}  sm={6}> 
-          <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
-          <div style={{flexGrow:1,marginRight:"5px"}}>
-          <InputLabel >Category</InputLabel>
-          <Select
+          <Grid item xs={12}  sm={6}> 
+            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", margin:"15px 0px"}}> 
+            <div style={{flexGrow:1,marginRight:"5px"}}>
+            <InputLabel >Category</InputLabel>
+            <Select
 
-          {...register("categoryId",{ required: true })}
+            {...register("categoryId",{ required: true })}
 
-            open={open}
-            onClose={handleCloseDropDown}
-            onOpen={handleOpenDropDown}
-          fullWidth
+              open={open}
+              onClose={handleCloseDropDown}
+              onOpen={handleOpenDropDown}
+            fullWidth
 
-          >
-          {categories.length ? (
-              categories.map((item) => (
-                <MenuItem value={item.id}>{item.name}</MenuItem>
-              ))
-          ) :(
-            <MenuItem value={null}>None</MenuItem>
-          )}
+            >
+            {categories.length ? (
+                categories.map((item) => (
+                  <MenuItem value={item.id}>{item.name}</MenuItem>
+                ))
+            ) :(
+              <MenuItem value={null}>None</MenuItem>
+            )}
 
-          
-          </Select>
-          </div>
-          <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            disableElevation
-            onClick={onNewCategoryClick}
-          >
-            Add new category
-          </Button>
-          </div>
-          </div>
+            
+            </Select>
+            </div>
+            <div>
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              onClick={onNewCategoryClick}
+            >
+              Add new category
+            </Button>
+            </div>
+            </div>
           <span style={{color:"red"}}> {errors.categoryId && 'required'}</span>
       </Grid>
       <Grid item xs={12} sm={6}>
