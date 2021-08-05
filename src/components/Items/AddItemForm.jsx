@@ -8,31 +8,36 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormModal from "../common/FormModal";
 import AddCategoryForm from "../Categories/AddCategoryForm";
 
-const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
+const AddItemForm = ({ submitAddItem, categories, submitCategoryData }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const [newCategoryModel, setNewCategoryModel] = useState(false);
-
-  console.log(errors);
-
+  const texSlabArray = [0, 5, 12, 18, 28];
   const [open, setOpen] = React.useState(false);
-
+  const [openTexSlab, setOpenTexSlab] = React.useState(false);
+  const handleCloseDropDownTexSlab = () => {
+    setOpenTexSlab(false);
+  };
+  const handleOpenDropDownTexSlab = () => {
+    setOpenTexSlab(true);
+  };
   const handleCloseDropDown = () => {
     setOpen(false);
   };
-
   const handleOpenDropDown = () => {
     setOpen(true);
   };
+
   const handleClosecategoryModal = () => {
     setNewCategoryModel(false);
   };
 
   const submitData = (data) => {
-    submitProjectData({ ...data, ...generateId("item") });
+    submitAddItem({ ...data, ...generateId("item") });
+    console.log(data);
   };
   const onNewCategoryClick = () => {
     setNewCategoryModel(true);
@@ -61,6 +66,8 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="Product"
               margin="dense"
               variant="outlined"
+              name="product"
+              type="text"
             />
             <span style={{ color: "red" }}>
               {" "}
@@ -74,6 +81,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="Quantity"
               margin="dense"
               variant="outlined"
+              type="number"
             />
             <span style={{ color: "red" }}>
               {" "}
@@ -89,7 +97,10 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
                 margin: "15px 0px",
               }}
             >
-              <div style={{ flexGrow: 1, marginRight: "5px" }}>
+              <div
+                style={{ flexGrow: 1, marginRight: "5px" }}
+                variant="outlined"
+              >
                 <InputLabel>Category</InputLabel>
                 <Select
                   {...register("categoryId", { required: true })}
@@ -154,6 +165,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="Sales Price"
               margin="dense"
               variant="outlined"
+              type="number"
             />
             <span style={{ color: "red" }}>
               {" "}
@@ -167,6 +179,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="Purchase Price"
               margin="dense"
               variant="outlined"
+              type="number"
             />
             <span style={{ color: "red" }}>
               {" "}
@@ -180,6 +193,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="MRP"
               margin="dense"
               variant="outlined"
+              type="number"
             />
             <span style={{ color: "red" }}> {errors.mrp && "required"}</span>
           </Grid>
@@ -190,6 +204,7 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
               label="Discount"
               margin="dense"
               variant="outlined"
+              type="number"
             />
             <span style={{ color: "red" }}>
               {" "}
@@ -197,13 +212,30 @@ const AddItemForm = ({ submitProjectData, categories, submitCategoryData }) => {
             </span>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              {...register("texSlab", { required: true })}
-              fullWidth
-              label="Tex Slab"
-              margin="dense"
-              variant="outlined"
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ flexGrow: 1, marginRight: "5px" }}>
+                <InputLabel>Tex Slab</InputLabel>
+                <Select
+                  {...register("texSlab", { required: true })}
+                  open={openTexSlab}
+                  onClose={handleCloseDropDownTexSlab}
+                  onOpen={handleOpenDropDownTexSlab}
+                  fullWidth
+                >
+                  {texSlabArray.map((itemTex) => (
+                    <MenuItem value={itemTex} key={itemTex}>
+                      {itemTex}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+            </div>
             <span style={{ color: "red" }}>
               {" "}
               {errors.texSlab && "required"}
