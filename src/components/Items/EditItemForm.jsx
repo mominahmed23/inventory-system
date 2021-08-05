@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, Button, MenuItem, Grid } from "@material-ui/core";
+import { Box, TextField, Button, Grid } from "@material-ui/core";
 import { useState } from "react";
 import FormModal from "../common/FormModal";
 import AddCategoryForm from "../Categories/AddCategoryForm";
