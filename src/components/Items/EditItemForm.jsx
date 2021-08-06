@@ -121,6 +121,7 @@ const EditItemForm = ({
                   }}
                 >
                   <div style={{ flexGrow: 1, marginRight: "5px" }}>
+                    <label>Category</label>
                     <Field
                       style={{
                         height: "39px",
@@ -287,6 +288,7 @@ const EditItemForm = ({
                 </Field>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <label>Tex Slab</label>
                 <Field
                   style={{
                     height: "40px",
