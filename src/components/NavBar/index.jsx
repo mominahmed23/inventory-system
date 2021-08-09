@@ -1,37 +1,15 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import AddItemForm from "../Items/AddItemForm";
 import AddClientForm from "../Categories/AddCategoryForm";
 import { useSelector } from "react-redux";
 import { addItemAction } from "../../redux/actions/items";
 import { useDispatch } from "react-redux";
 import FormModal from "../common/FormModal";
-import { addCategoryAction } from "./../../redux/actions/categories/index";
+import { addCategoryAction } from "../../redux/actions/categories/index";
 import { Link } from "react-router-dom";
+import { Button } from "antd";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  btn: {
-    borderRadius: "10px",
-    border: "2px solid #003f88",
-    backgroundColor: "#003f88",
-  },
-}));
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
+const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [openItem, setOpenItem] = useState(false);
   const { categories } = useSelector((state) => state);
@@ -63,28 +41,21 @@ export default function ButtonAppBar() {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Inventory Store
-          </Typography>
-          <div>
-            <Button variant="contained">
-              <Link to="/">Home</Link>
-            </Button>
-            <Button variant="contained">
-              <Link to="/visuals">Visuals</Link>
-            </Button>
-            <Button variant="contained" onClick={handleClickOpen}>
-              Add Category
-            </Button>
-            <Button variant="contained" onClick={handleClickOpenItem}>
-              Add Item
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
+    <div className="position-static px-5 py-3 custom-navbar">
+      <div className="d-flex justify-space-between align-center">
+        <h4 className="mb-0">Inventory Store</h4>
+        <div>
+          <Button type="link">
+            <Link to="/">Home</Link>
+          </Button>
+          <Button type="link">
+            <Link to="/visuals">Visuals</Link>
+          </Button>
+          <Button onClick={handleClickOpen}>Add Category</Button>
+          <Button onClick={handleClickOpenItem}>Add Item</Button>
+        </div>
+      </div>
+
       {open && (
         <FormModal
           title="Add New Category"
@@ -112,4 +83,6 @@ export default function ButtonAppBar() {
       )}
     </div>
   );
-}
+};
+
+export default NavBar;

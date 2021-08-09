@@ -1,10 +1,11 @@
-import { Button, Input, Box } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import faker from "faker";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemBulkAction } from "../../redux/actions/items";
 import { generateId } from "./../../utils/common";
 import { Line } from "react-chartjs-2";
+import { Button, InputNumber, Select, Space } from "antd";
+import { Option } from "antd/lib/mentions";
 
 const DataFromFaker = () => {
   const dispatch = useDispatch();
@@ -39,11 +40,11 @@ const DataFromFaker = () => {
     setcd({
       labels: [...items.map((i) => i.product)],
       datasets: [
-        {
-          label: val,
-          data: [...items.map((i) => i[val])],
-          borderColor: "rgb(75, 192, 192)",
-        },
+        ...val.map((x, index) => ({
+          label: x,
+          data: [...items.map((i) => i[x])],
+          borderColor: `rgb(75, ${index}00, 192)`,
+        })),
       ],
     });
   };
@@ -56,7 +57,7 @@ const DataFromFaker = () => {
           {
             label: "Price",
             data: [...items.map((i) => i.salesPrice)],
-            borderColor: "rgb(75, 192, 192)",
+            borderColor: "rgb(75, 000, 192)",
           },
         ],
       });
@@ -64,24 +65,37 @@ const DataFromFaker = () => {
   }, [items]);
 
   return (
-    <div>
-      <Button onClick={loadDataFromFaker}>load data</Button>
-      <input
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
-        type="number"
-        min={1}
-      />
+    <div className="pt-10 px-5">
+      <Space>
+        <InputNumber
+          min={1}
+          value={number}
+          onChange={(value) => setNumber(value)}
+        />
+        <Button onClick={loadDataFromFaker}>load data</Button>
+      </Space>
+
       {cd === null ? null : (
-        <div style={{ padding: "100px 150px" }}>
-          <div>
-            <select onChange={(e) => changeDataSet(e.target.value)}>
+        <div className="py-12 px-16">
+          <div className="d-inline-flex" style={{ minWidth: "260px" }}>
+            <Select
+              style={{ width: "100%" }}
+              mode="multiple"
+              onChange={changeDataSet}
+              defaultValue={["salesPrice"]}
+              placeholder="Please select"
+            >
+              <Option key="salesPrice">Sales Price</Option>
+              <Option key="purchasePrice">Purchase Price</Option>
+              <Option key="mrp">MRP</Option>
+            </Select>
+            {/* <select onChange={(e) => changeDataSet(e.target.value)}>
               <option selected value="salesPrice">
                 Sales Price
               </option>
               <option value="purchasePrice">Purchase Price</option>
               <option value="mrp">MRP</option>
-            </select>
+            </select> */}
           </div>
           <Line data={cd} />
         </div>
