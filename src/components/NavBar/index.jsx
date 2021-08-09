@@ -51,6 +51,12 @@ const NavBar = () => {
           <Button type="link">
             <Link to="/visuals">Visuals</Link>
           </Button>
+          <Button type="link">
+            <Link to="/items">Items</Link>
+          </Button>
+          <Button type="link">
+            <Link to="/loaddata">Load Data</Link>
+          </Button>
           <Button onClick={handleClickOpen}>Add Category</Button>
           <Button onClick={handleClickOpenItem}>Add Item</Button>
         </div>

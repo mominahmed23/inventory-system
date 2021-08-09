@@ -75,7 +75,7 @@ const Items = () => {
   };
 
   return (
-    <Box paddingTop={3}>
+    <Box paddingY={5}>
       <Container fixed>
         {items.length ? (
           <TableContainer component={Paper}>
