@@ -1,8 +1,19 @@
-import { Card, Space, Typography, Button, Row, Col } from "antd";
+import { Card, Space, Typography, Button, Row, Col, Table } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CreateCatModal from "../../components/Forms/CreateCatModal";
 import CreateItemModal from "../../components/Forms/CreateItemModal";
+
+const columns = [
+  {
+    title: "Product",
+    dataIndex: "product",
+  },
+  {
+    title: "Price",
+    dataIndex: "salesPrice",
+  },
+];
 
 const Home = () => {
   const [isCatModalVisible, setIsCatModalVisible] = useState(false);
@@ -34,17 +45,9 @@ const Home = () => {
         </Col>
       </Row>
       <Typography.Title level={3}>Items</Typography.Title>
-      <Row className="mb-5">
-        <Col span={18}>
-          <Space wrap>
-            {items.map((i) => (
-              <Card>
-                <p>{i.product}</p>
-              </Card>
-            ))}
-          </Space>
-        </Col>
-      </Row>
+      <div className="mb-5">
+        <Table pagination={false} columns={columns} dataSource={items} />
+      </div>
 
       <CreateCatModal
         visible={isCatModalVisible}
