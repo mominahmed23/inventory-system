@@ -1,62 +1,22 @@
 import React from "react";
-import { Box, TextField, Button, MenuItem, Grid } from "@material-ui/core";
+import { Box, TextField, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { generateId } from "../../utils/common";
-import { useState } from "react";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormModal from "../common/FormModal";
-import AddCategoryForm from "../Categories/AddCategoryForm";
 
-const AddItemForm = ({ submitAddItem, categories, submitCategoryData }) => {
+const AddItemForm = ({ submitAddItem, categories }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [newCategoryModel, setNewCategoryModel] = useState(false);
-  const texSlabArray = [0, 5, 12, 18, 28];
-  const [open, setOpen] = React.useState(false);
-  const [openTexSlab, setOpenTexSlab] = React.useState(false);
-  const handleCloseDropDownTexSlab = () => {
-    setOpenTexSlab(false);
-  };
-  const handleOpenDropDownTexSlab = () => {
-    setOpenTexSlab(true);
-  };
-  const handleCloseDropDown = () => {
-    setOpen(false);
-  };
-  const handleOpenDropDown = () => {
-    setOpen(true);
-  };
-
-  const handleClosecategoryModal = () => {
-    setNewCategoryModel(false);
-  };
 
   const submitData = (data) => {
     submitAddItem({ ...data, ...generateId("item") });
     console.log(data);
   };
-  const onNewCategoryClick = () => {
-    setNewCategoryModel(true);
-  };
+
   return (
     <div>
-      {newCategoryModel && (
-        <FormModal
-          title="Add New Category"
-          open={newCategoryModel}
-          handleClose={handleClosecategoryModal}
-        >
-          <AddCategoryForm
-            submitCategoryData={submitCategoryData}
-            handleClose={handleClosecategoryModal}
-          />
-        </FormModal>
-      )}
-
       <form onSubmit={handleSubmit(submitData)}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -88,52 +48,7 @@ const AddItemForm = ({ submitAddItem, categories, submitCategoryData }) => {
               {errors.quantity && "required"}
             </span>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                margin: "15px 0px",
-              }}
-            >
-              <div
-                style={{ flexGrow: 1, marginRight: "5px" }}
-                variant="outlined"
-              >
-                <InputLabel>Category</InputLabel>
-                <Select
-                  {...register("categoryId", { required: true })}
-                  open={open}
-                  onClose={handleCloseDropDown}
-                  onOpen={handleOpenDropDown}
-                  fullWidth
-                >
-                  {categories.length ? (
-                    categories.map((item) => (
-                      <MenuItem value={item.id}>{item.name}</MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem value={null}>None</MenuItem>
-                  )}
-                </Select>
-              </div>
-              <div>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  disableElevation
-                  onClick={onNewCategoryClick}
-                >
-                  Add new category
-                </Button>
-              </div>
-            </div>
-            <span style={{ color: "red" }}>
-              {" "}
-              {errors.categoryId && "required"}
-            </span>
-          </Grid>
+
           <Grid item xs={12} sm={6}>
             <TextField
               {...register("itemCode", { required: true })}
@@ -211,36 +126,7 @@ const AddItemForm = ({ submitAddItem, categories, submitCategoryData }) => {
               {errors.discount && "required"}
             </span>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ flexGrow: 1, marginRight: "5px" }}>
-                <InputLabel>Tex Slab</InputLabel>
-                <Select
-                  {...register("texSlab", { required: true })}
-                  open={openTexSlab}
-                  onClose={handleCloseDropDownTexSlab}
-                  onOpen={handleOpenDropDownTexSlab}
-                  fullWidth
-                >
-                  {texSlabArray.map((itemTex) => (
-                    <MenuItem value={itemTex} key={itemTex}>
-                      {itemTex}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </div>
-            </div>
-            <span style={{ color: "red" }}>
-              {" "}
-              {errors.texSlab && "required"}
-            </span>
-          </Grid>
+
           <Grid item xs={12} sm={12}>
             <TextField
               {...register("comment")}

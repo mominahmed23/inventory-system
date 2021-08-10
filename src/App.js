@@ -7,7 +7,6 @@ import Nav from "./components/NavBar";
 import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DataFromFaker from "./components/DataFromFaker";
-import Items from "./components/Items/index";
 import LoadData from "./components/LoadData";
 
 function App() {
@@ -22,9 +21,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/items">
-            <Items />
-          </Route>
+
           <Route path="/loaddata">
             <LoadData />
           </Route>
