@@ -1,8 +1,8 @@
 import { Card, Space, Typography, Button, Row, Col } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import CreatCatModal from "./../../components/common/CreatCatModal";
-import CreatItemModal from "./../../components/common/CreatItemModal";
+import CreateCatModal from "../../components/Forms/CreateCatModal";
+import CreateItemModal from "../../components/Forms/CreateItemModal";
 
 const Home = () => {
   const [isCatModalVisible, setIsCatModalVisible] = useState(false);
@@ -11,7 +11,7 @@ const Home = () => {
   const { categories, items } = useSelector((state) => state);
   return (
     <div className="py-5 px-8">
-      <Typography.Title>Categories</Typography.Title>
+      <Typography.Title level={3}>Categories</Typography.Title>
       <Row className="mb-5">
         <Col span={18}>
           <Space wrap>
@@ -33,7 +33,7 @@ const Home = () => {
           </div>
         </Col>
       </Row>
-      <Typography.Title>Items</Typography.Title>
+      <Typography.Title level={3}>Items</Typography.Title>
       <Row className="mb-5">
         <Col span={18}>
           <Space wrap>
@@ -46,12 +46,12 @@ const Home = () => {
         </Col>
       </Row>
 
-      <CreatCatModal
+      <CreateCatModal
         visible={isCatModalVisible}
         onCancel={() => setIsCatModalVisible(false)}
         closeModel={setIsCatModalVisible}
       />
-      <CreatItemModal
+      <CreateItemModal
         visible={isItemModalVisible}
         onCancel={() => setIsItemModalVisible(false)}
         closeModel={setIsItemModalVisible}

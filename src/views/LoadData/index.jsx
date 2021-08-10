@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemBulkAction } from "../../redux/actions/items";
 import { Button, InputNumber, Space } from "antd";
 import { addCategoryBulkAction } from "../../redux/actions/categories";
-import { texSlabValues } from "../../utils/common";
+import { taxSlabValues } from "../../utils/common";
 
 const LoadData = () => {
   const dispatch = useDispatch();
@@ -41,8 +41,8 @@ const LoadData = () => {
           purchasePrice: faker.commerce.price(),
           mrp: faker.commerce.price(),
           discount: faker.datatype.float(),
-          texSlab:
-            texSlabValues[Math.floor(Math.random() * texSlabValues.length)],
+          taxSlab:
+            taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
         };
         newitems.push(singleItem);
       }

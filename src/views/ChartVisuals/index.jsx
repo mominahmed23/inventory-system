@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 
-const DataFromFaker = () => {
+const ChartVisuals = () => {
   const [cd, setcd] = useState(null);
   const { items } = useSelector((state) => state);
 
@@ -60,4 +60,4 @@ const DataFromFaker = () => {
   );
 };
 
-export default DataFromFaker;
+export default ChartVisuals;
