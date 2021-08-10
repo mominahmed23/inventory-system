@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
-import { colorsGraph } from "../../utils/common";
+import { colorG, colorsGraph } from "../../utils/common";
 
 const ChartVisuals = () => {
   const [cd, setcd] = useState(null);
@@ -16,7 +16,7 @@ const ChartVisuals = () => {
         ...val.map((x, index) => ({
           label: x,
           data: [...items.map((i) => i[x])],
-          borderColor: colorsGraph[index],
+          borderColor: colorG[x],
         })),
       ],
     });
@@ -30,7 +30,7 @@ const ChartVisuals = () => {
           {
             label: "Price",
             data: [...items.map((i) => i.salesPrice)],
-            borderColor: colorsGraph[0],
+            borderColor: colorG.salesPrice,
           },
         ],
       });
