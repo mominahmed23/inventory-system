@@ -14,9 +14,6 @@ const NavBar = () => {
           <Button type="link">
             <Link to="/visuals">Visuals</Link>
           </Button>
-          <Button type="link">
-            <Link to="/loaddata">Load Data</Link>
-          </Button>
         </div>
       </div>
     </div>

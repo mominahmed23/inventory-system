@@ -6,7 +6,12 @@ const categoriesReducer = (state = initialState, action) => {
     case "ADD_CATEGORY":
       return [...state, action.payload];
     case "ADD_CATEGORY_BULK":
-      return [...action.payload];
+      return [...state, ...action.payload];
+    case "DELETE_CATEGORY":
+      const index = state.map((e) => e.id).indexOf(action.payload);
+      const temp = [...state];
+      temp.splice(index, 1);
+      return [...temp];
     default:
       return state;
   }

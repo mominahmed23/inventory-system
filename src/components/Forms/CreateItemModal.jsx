@@ -6,7 +6,7 @@ import { addItemAction } from "../../redux/actions/items/index";
 import { useDispatch, useSelector } from "react-redux";
 import { taxSlabValues } from "../../utils/common";
 
-const CreateItemModal = ({ visible, onCancel, closeModel }) => {
+const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state);
 
@@ -25,7 +25,7 @@ const CreateItemModal = ({ visible, onCancel, closeModel }) => {
       comment: formValues.comment,
     };
     dispatch(addItemAction(singleCat));
-    closeModel(false);
+    onCloseModel(false);
   };
 
   return (
@@ -162,7 +162,9 @@ const CreateItemModal = ({ visible, onCancel, closeModel }) => {
           >
             <Select placeholder="Tax Slab">
               {taxSlabValues.map((x) => (
-                <Select.Option value={x}>{x}</Select.Option>
+                <Select.Option key={x} value={x}>
+                  {x}
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>
@@ -170,7 +172,9 @@ const CreateItemModal = ({ visible, onCancel, closeModel }) => {
           <Form.Item name="categoryId" label="Category">
             <Select placeholder="Category">
               {categories.map((x) => (
-                <Select.Option value={x.id}>{x.name}</Select.Option>
+                <Select.Option key={x.id} value={x.id}>
+                  {x.name}
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>

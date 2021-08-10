@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import store from "./redux/storeConfig/store";
 import Nav from "./components/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import LoadData from "./views/LoadData";
 import Home from "./views/Home";
 import ChartVisuals from "./views/ChartVisuals";
 
@@ -22,9 +21,6 @@ function App() {
           </Route>
           <Route path="/visuals">
             <ChartVisuals />
-          </Route>
-          <Route path="/loaddata">
-            <LoadData />
           </Route>
         </Switch>
       </Router>

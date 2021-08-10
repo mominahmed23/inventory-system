@@ -5,7 +5,7 @@ import faker from "faker";
 import { addCategoryAction } from "../../redux/actions/categories/index";
 import { useDispatch } from "react-redux";
 
-const CreateCatModal = ({ visible, onCancel, closeModel }) => {
+const CreateCatModal = ({ visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
 
   const submitCat = (formValues) => {
@@ -14,7 +14,7 @@ const CreateCatModal = ({ visible, onCancel, closeModel }) => {
       name: formValues.catName,
     };
     dispatch(addCategoryAction(singleCat));
-    closeModel(false);
+    onCloseModel(false);
   };
 
   return (

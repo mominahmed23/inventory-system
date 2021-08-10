@@ -11,3 +11,10 @@ export const addCategoryBulkAction = (data) => {
     payload: data,
   };
 };
+
+export const deleteCategoryAction = (id) => {
+  return {
+    type: "DELETE_CATEGORY",
+    payload: id,
+  };
+};
