@@ -4,10 +4,10 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./redux/storeConfig/store";
 import Nav from "./components/NavBar";
-import Home from "./components/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import DataFromFaker from "./components/DataFromFaker";
+import ChartVisuals from "./components/DataFromFaker";
 import LoadData from "./components/LoadData";
+import Home from "./views/Home";
 
 function App() {
   return (
@@ -15,13 +15,12 @@ function App() {
       <Router>
         <Nav />
         <Switch>
-          <Route path="/visuals">
-            <DataFromFaker />
-          </Route>
           <Route exact path="/">
             <Home />
           </Route>
-
+          <Route path="/visuals">
+            <ChartVisuals />
+          </Route>
           <Route path="/loaddata">
             <LoadData />
           </Route>
