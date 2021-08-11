@@ -1,4 +1,4 @@
-import { Typography, Button, Row, Col, Table, InputNumber } from "antd";
+import { Button, Row, Col, InputNumber } from "antd";
 import React, { useState } from "react";
 import faker from "faker";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,39 +11,7 @@ import CreateItemModal from "../../components/Forms/CreateItemModal";
 import CategoriesList from "../../components/Category/CategoriesList";
 import TextslabList from "../../components/Textslab/TextslabList";
 import { addTextslabBulkAction } from "../../redux/actions/textslab";
-
-
-const columns = [
-  {
-    title: "Product",
-    dataIndex: "product",
-  },
-  {
-    title: "Price",
-    dataIndex: "salesPrice",
-  },
-  {
-    title: "Actions",
-    render: (value) => (
-      <>
-        <Button
-          onClick={() => {
-            console.log(value.id);
-          }}
-        >
-          Delete
-        </Button>
-        <Button
-          onClick={() => {
-            console.log(value.id);
-          }}
-        >
-          Edit
-        </Button>
-      </>
-    ),
-  },
-];
+import ItemsTable from "../../components/Item/ItemsTable";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -98,7 +66,9 @@ const Home = () => {
           purchasePrice: faker.commerce.price(),
           mrp: faker.commerce.price(),
           discount: faker.datatype.float(),
-          taxSlab:taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          taxslab:
+            taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          comment: faker.lorem.sentence(),
         };
         newitems.push(singleItem);
       }
@@ -106,14 +76,11 @@ const Home = () => {
     }
   };
 
-  const { categories, items } = useSelector((state) => state);
+  const { categories } = useSelector((state) => state);
   return (
     <div className="py-5 px-8">
       <Row className="mb-5">
-        <Col span={18}>
-          <CategoriesList />
-        </Col>
-        <Col span={6}>
+        <Col lg={6} md={12} sm={24}>
           <div className="d-flex mb-5">
             <InputNumber
               className="mr-2"
@@ -161,6 +128,9 @@ const Home = () => {
             </Button>
           </div>
         </Col>
+        <Col lg={18} md={12} sm={24}>
+          <CategoriesList />
+        </Col>
       </Row>
 
       <Row className="mb-5">
@@ -169,11 +139,9 @@ const Home = () => {
         </Col>
       </Row>
 
-      <Typography.Title level={3}>Items</Typography.Title>
-      <div className="mb-5">
-        <Table pagination={false} columns={columns} dataSource={items} />
-      </div>
+   
 
+      <ItemsTable />
       <CreateCatModal
         visible={isCatModalVisible}
         onCancel={() => setIsCatModalVisible(false)}

@@ -2,17 +2,18 @@ import { Col, Modal, Row, Typography } from "antd";
 import { Form, Input, Button, InputNumber, Select } from "antd";
 import React from "react";
 import faker from "faker";
-import { addItemAction } from "../../redux/actions/items/index";
+import { addItemAction, editItemAction } from "../../redux/actions/items/index";
 import { useDispatch, useSelector } from "react-redux";
 import { taxSlabValues } from "../../utils/common";
 
-const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
+const CreateItemModal = ({ data, visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state);
 
   const submitItem = (formValues) => {
-    const singleCat = {
+    const singleItem = {
       id: faker.datatype.uuid(),
+      categoryId: formValues.categoryId,
       product: formValues.product,
       quantity: formValues.quantity,
       itemCode: formValues.itemCode,
@@ -24,7 +25,12 @@ const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
       taxslab: formValues.taxslab,
       comment: formValues.comment,
     };
-    dispatch(addItemAction(singleCat));
+    if (data) {
+      dispatch(editItemAction({ id: data.id, ...formValues }));
+    } else {
+      dispatch(addItemAction(singleItem));
+    }
+
     onCloseModel(false);
   };
 
@@ -37,7 +43,12 @@ const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
       onCancel={onCancel}
     >
       {categories.length ? (
-        <Form layout="vertical" name="Item" onFinish={submitItem}>
+        <Form
+          initialValues={data}
+          layout="vertical"
+          name="Item"
+          onFinish={submitItem}
+        >
           <Row gutter={[16, 8]}>
             <Col xs={24} md={12} sm={12}>
               <Form.Item
@@ -160,7 +171,7 @@ const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
             label="Tax Slab"
             rules={[{ required: true, message: "Please input Tax Slab!" }]}
           >
-            <Select placeholder="Tax Slab">
+            <Select mode="multiple" placeholder="Tax Slab">
               {taxSlabValues.map((x) => (
                 <Select.Option key={x} value={x}>
                   {x}
@@ -169,7 +180,11 @@ const CreateItemModal = ({ visible, onCancel, onCloseModel }) => {
             </Select>
           </Form.Item>
 
-          <Form.Item name="categoryId" label="Category">
+          <Form.Item
+            name="categoryId"
+            label="Category"
+            rules={[{ required: true, message: "Please input Tax Slab!" }]}
+          >
             <Select placeholder="Category">
               {categories.map((x) => (
                 <Select.Option key={x.id} value={x.id}>
