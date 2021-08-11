@@ -4,12 +4,10 @@ export const addItemAction = (data) => {
     payload: data,
   };
 };
-export const editItemAction = (data, id) => {
-  console.log(id);
+export const editItemAction = (data) => {
   return {
     type: "EDIT_ITEM",
     payload: data,
-    id,
   };
 };
 export const deleteItemAction = (id) => {
