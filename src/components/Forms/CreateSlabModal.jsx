@@ -2,19 +2,24 @@ import { Modal } from "antd";
 import { Form, Input, Button } from "antd";
 import React from "react";
 import faker from "faker";
-import { addtextslabAction } from "../../redux/actions/textslab/index";
+import { addtextslabAction , editTaxAction } from "../../redux/actions/textslab/index";
 import { useDispatch } from "react-redux";
 
-const CreateSlabModal = ({ visible, onCancel, onCloseModel }) => {
+const CreateSlabModal = ({ visible, onCancel, onCloseModel , data }) => {
+  console.log(data)
   const dispatch = useDispatch();
 
   const submitText = (formValues) => {
-    const singletextslab = {
+    const singleTaxSlab = {
       id: faker.datatype.uuid(),
-      name: formValues.textName,
-      value: formValues.textValue,
+      name: formValues.name,
+      value: formValues.value,
     };
-    dispatch(addtextslabAction(singletextslab));
+    if (data) {
+      dispatch(editTaxAction({id: data.id, ...formValues}));
+    } else {
+      dispatch(addtextslabAction(singleTaxSlab));
+    }
     onCloseModel(false);
   };
 
@@ -22,34 +27,34 @@ const CreateSlabModal = ({ visible, onCancel, onCloseModel }) => {
     <Modal
       footer={null}
       destroyOnClose
-      title="Add TextSlab"
+      title="Add TaxSlab"
       visible={visible}
       onCancel={onCancel}
     >
-      <Form layout="vertical" name="TextSlab" onFinish={submitText}>
+      <Form initialValues={data} layout="vertical" name="TaxSlab" onFinish={submitText}>
         <Form.Item
-          label="TextSlab Name"
-          name="textName"
+          label="TaxSlab Name"
+          name="name"
           rules={[
             {
               required: true,
-              message: "Please input TextSlab Name!",
+              message: "Please input TaxSlab Name!",
             },
           ]}
         >
-          <Input placeholder="TextSlab Name" />
+          <Input placeholder="TaxSlab Name" />
         </Form.Item>
         <Form.Item
-          label="TextSlab Value"
-          name="textValue"
+          label="TaxSlab Value"
+          name="value"
           rules={[
             {
               required: true,
-              message: "Please input TextSlab Value!",
+              message: "Please input TaxSlab Value!",
             },
           ]}
         >
-          <Input placeholder="TextSlab Value" />
+          <Input placeholder="TaxSlab Value" />
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit">Submit</Button>

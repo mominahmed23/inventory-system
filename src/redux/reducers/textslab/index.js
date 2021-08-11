@@ -14,6 +14,11 @@ const textslabReducer = (state = initialState, action) => {
       const temp = [...state];
       temp.splice(index, 1);
       return [...temp];
+    case "EDIT_TAXSLAB":
+      const indexForEdit = state.map((e) => e.id).indexOf(action.payload.id);
+      const tempForEdit = [...state];
+      tempForEdit.splice(indexForEdit, 1, action.payload);
+      return [...tempForEdit];
     default:
       return state;
   }

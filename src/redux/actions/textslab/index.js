@@ -20,3 +20,10 @@ export const deleteTextslabAction = (id) => {
     payload: id,
   };
 };
+
+export const editTaxAction = (data) => {
+  return {
+    type: "EDIT_TAXSLAB",
+    payload: data,
+  };
+};

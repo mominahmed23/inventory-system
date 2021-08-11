@@ -52,7 +52,7 @@ const Home = () => {
   const [isSlabModalVisible, setIsSlabModalVisible] = useState(false);
   const [itemNumber, setItemNumber] = useState(1);
   const [catNumber, setCatNumber] = useState(1);
-  const [txtNumber, setTxtNumber] = useState(1);
+  const [taxNumber, setTaxNumber] = useState(1);
 
   const loadCategoriesFromFaker = () => {
     if (catNumber) {
@@ -69,13 +69,13 @@ const Home = () => {
   };
 
   const loadTextslabFromFaker = () => {
-    if (txtNumber) {
+    if (taxNumber) {
       const newtextslab = [];
-      for (let i = 0; i < txtNumber; i++) {
+      for (let i = 0; i < taxNumber; i++) {
         const singleTxt = {
           id: faker.datatype.uuid(),
-          name: faker.commerce.department(),
-          value: faker.datatype.number(),
+          name: faker.company.companyName(),
+          value: taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
         };
         newtextslab.push(singleTxt);
       }
@@ -130,11 +130,11 @@ const Home = () => {
             <InputNumber
               className="mr-2"
               min={1}
-              value={txtNumber}
-              onChange={(value) => setTxtNumber(value)}
+              value={taxNumber}
+              onChange={(value) => setTaxNumber(value)}
             />
             <Button onClick={loadTextslabFromFaker}>
-              Load TextSlab faker
+              Load TaxSlab faker
             </Button>
           </div>
 
@@ -157,7 +157,7 @@ const Home = () => {
               Add Item
             </Button>
             <Button onClick={() => setIsSlabModalVisible(true)}>
-              Add TextSlab
+              Add TaxSlab
             </Button>
           </div>
         </Col>
