@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <div className="position-static px-5 py-3 custom-navbar">
       <div className="d-flex justify-space-between align-center">
-        <h4 className="mb-0">Inventory Store</h4>
+        <h3 className="mb-0">Inventory Store</h3>
         <div>
           <Button type="link">
             <Link to="/">Home</Link>

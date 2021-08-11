@@ -17,8 +17,7 @@ const CreateCatModal = ({ data, visible, onCancel, onCloseModel }) => {
       name: formValues.name,
     };
     if (data) {
-      dispatch(editCategoryAction({ ...formValues, id: data.id }));
-      message.success('Category Edited Successfully');
+      dispatch(editCategoryAction({ id: data.id, ...formValues }));
     } else {
       dispatch(addCategoryAction(singleCat));
       message.success('Category Added Successfully');

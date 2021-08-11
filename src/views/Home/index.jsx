@@ -1,4 +1,4 @@
-import { Typography, Button, Row, Col, Table, InputNumber, message } from "antd";
+import { Button, Row, Col, InputNumber, message } from "antd";
 import React, { useState } from "react";
 import faker from "faker";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,47 +6,21 @@ import { addItemBulkAction } from "../../redux/actions/items";
 import { addCategoryBulkAction } from "../../redux/actions/categories";
 import { taxSlabValues } from "../../utils/common";
 import CreateCatModal from "../../components/Forms/CreateCatModal";
+import CreateSlabModal from "../../components/Forms/CreateSlabModal";
 import CreateItemModal from "../../components/Forms/CreateItemModal";
 import CategoriesList from "../../components/Category/CategoriesList";
-
-const columns = [
-  {
-    title: "Product",
-    dataIndex: "product",
-  },
-  {
-    title: "Price",
-    dataIndex: "salesPrice",
-  },
-  {
-    title: "Actions",
-    render: (value) => (
-      <>
-        <Button
-          onClick={() => {
-            console.log(value.id);
-          }}
-        >
-          Delete
-        </Button>
-        <Button
-          onClick={() => {
-            console.log(value.id);
-          }}
-        >
-          Edit
-        </Button>
-      </>
-    ),
-  },
-];
+import TextslabList from "../../components/Textslab/TextslabList";
+import { addTextslabBulkAction } from "../../redux/actions/textslab";
+import ItemsTable from "../../components/Item/ItemsTable";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [isCatModalVisible, setIsCatModalVisible] = useState(false);
   const [isItemModalVisible, setIsItemModalVisible] = useState(false);
+  const [isSlabModalVisible, setIsSlabModalVisible] = useState(false);
   const [itemNumber, setItemNumber] = useState(1);
   const [catNumber, setCatNumber] = useState(1);
+  const [taxNumber, setTaxNumber] = useState(1);
 
   
   const loadCategoriesFromFaker = () => {
@@ -63,14 +37,29 @@ const Home = () => {
       message.success('Category(s) Added Successfully');
     }
   };
+
+  const loadTextslabFromFaker = () => {
+    if (taxNumber) {
+      const newtextslab = [];
+      for (let i = 0; i < taxNumber; i++) {
+        const singleTxt = {
+          id: faker.datatype.uuid(),
+          name: faker.company.companyName(),
+          value: taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+        };
+        newtextslab.push(singleTxt);
+      }
+      dispatch(addTextslabBulkAction(newtextslab));
+    }
+  };
+
   const loadItemsFromFaker = () => {
     if (itemNumber) {
       const newitems = [];
       for (let i = 0; i < itemNumber; i++) {
         const singleItem = {
           id: faker.datatype.uuid(),
-          categoryId:
-            categories[Math.floor(Math.random() * categories.length)].id,
+          categoryId:categories[Math.floor(Math.random() * categories.length)].id,
           product: faker.commerce.product(),
           quantity: faker.datatype.number(),
           itemCode: faker.datatype.string(),
@@ -79,8 +68,9 @@ const Home = () => {
           purchasePrice: faker.commerce.price(),
           mrp: faker.commerce.price(),
           discount: faker.datatype.float(),
-          taxSlab:
+          taxslab:
             taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          comment: faker.lorem.sentence(),
         };
         newitems.push(singleItem);
       }
@@ -89,14 +79,11 @@ const Home = () => {
     }
   };
 
-  const { categories, items } = useSelector((state) => state);
+  const { categories } = useSelector((state) => state);
   return (
     <div className="py-5 px-8">
       <Row className="mb-5">
-        <Col span={18}>
-          <CategoriesList />
-        </Col>
-        <Col span={6}>
+        <Col lg={6} md={12} sm={24}>
           <div className="d-flex mb-5">
             <InputNumber
               className="mr-2"
@@ -106,6 +93,18 @@ const Home = () => {
             />
             <Button onClick={loadCategoriesFromFaker}>
               Load Categories faker
+            </Button>
+          </div>
+
+          <div className="d-flex mb-5">
+            <InputNumber
+              className="mr-2"
+              min={1}
+              value={taxNumber}
+              onChange={(value) => setTaxNumber(value)}
+            />
+            <Button onClick={loadTextslabFromFaker}>
+              Load TaxSlab faker
             </Button>
           </div>
 
@@ -124,17 +123,28 @@ const Home = () => {
             <Button className="mr-2" onClick={() => setIsCatModalVisible(true)}>
               Add Category
             </Button>
-            <Button onClick={() => setIsItemModalVisible(true)}>
+            <Button className="mr-2" onClick={() => setIsItemModalVisible(true)}>
               Add Item
+            </Button>
+            <Button onClick={() => setIsSlabModalVisible(true)}>
+              Add TaxSlab
             </Button>
           </div>
         </Col>
+        <Col lg={18} md={12} sm={24}>
+          <CategoriesList />
+        </Col>
       </Row>
-      <Typography.Title level={3}>Items</Typography.Title>
-      <div className="mb-5">
-        <Table pagination={false} columns={columns} dataSource={items} />
-      </div>
 
+      <Row className="mb-5">
+        <Col span={18}>
+          <TextslabList />
+        </Col>
+      </Row>
+
+   
+
+      <ItemsTable />
       <CreateCatModal
         visible={isCatModalVisible}
         onCancel={() => setIsCatModalVisible(false)}
@@ -144,6 +154,11 @@ const Home = () => {
         visible={isItemModalVisible}
         onCancel={() => setIsItemModalVisible(false)}
         onCloseModel={setIsItemModalVisible}
+      />
+      <CreateSlabModal
+        visible={isSlabModalVisible}
+        onCancel={() => setIsSlabModalVisible(false)}
+        onCloseModel={setIsSlabModalVisible}
       />
     </div>
   );
