@@ -12,14 +12,14 @@ const CategoriesList = () => {
   const { categories } = useSelector((state) => state);
   const delCat = (id) => {
     dispatch(deleteCategoryAction(id));
-    message.success('Category Deleted Successfully');
+    message.success("Category Deleted Successfully");
   };
   const editCat = (i) => {
     setEditCatVal(i);
     setIsCatModalVisible(true);
   };
   return (
-    <div>
+    <div className="my-5">
       <Typography.Title level={3}>Categories</Typography.Title>
       <Space wrap>
         {categories.map((i) => (
@@ -30,8 +30,8 @@ const CategoriesList = () => {
               <DeleteOutlined onClick={() => delCat(i.id)} />,
               <EditOutlined onClick={() => editCat(i)} />,
             ]}
-          > 
-          <Typography.Title level={4}>{i.name}</Typography.Title>
+          >
+            <Typography.Title level={4}>{i.name}</Typography.Title>
           </Card>
         ))}
       </Space>

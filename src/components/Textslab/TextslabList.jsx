@@ -19,13 +19,13 @@ const TextslabList = () => {
     setIsSlabModalVisible(true);
   };
   return (
-    <div>
+    <div className="my-5">
       <Typography.Title level={3}>TaxSlab</Typography.Title>
       <Space wrap>
         {taxSlab.map((i) => (
           <Card
             key={i.id}
-            style={{ width: 150 }}
+            style={{ minWidth: 150 }}
             actions={[
               <DeleteOutlined onClick={() => delTxt(i.id)} />,
               <EditOutlined onClick={() => editTxt(i)} />,

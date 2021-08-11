@@ -16,7 +16,7 @@ const itemsReducer = (state = initialState, action) => {
       tempForDel.splice(indexForDel, 1);
       return [...tempForDel];
     case "ADD_ITEM_BULK":
-      return [...action.payload];
+      return [...state, ...action.payload];
     default:
       return state;
   }

@@ -19,7 +19,7 @@ const ItemsTable = () => {
     setIsItemModalVisible(true);
   };
   return (
-    <div className="mb-5">
+    <div className="my-5">
       <Typography.Title level={3}>Items</Typography.Title>
       <Table
         pagination={false}

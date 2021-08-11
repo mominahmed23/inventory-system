@@ -4,30 +4,30 @@ import React from "react";
 import faker from "faker";
 import { addItemAction, editItemAction } from "../../redux/actions/items/index";
 import { useDispatch, useSelector } from "react-redux";
-import { taxSlabValues } from "../../utils/common";
 
 const CreateItemModal = ({ data, visible, onCancel, onCloseModel }) => {
+  console.log(data);
   const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state);
+  const { categories, taxSlab } = useSelector((state) => state);
 
   const submitItem = (formValues) => {
-    const singleItem = {
-      id: faker.datatype.uuid(),
-      categoryId: formValues.categoryId,
-      product: formValues.product,
-      quantity: formValues.quantity,
-      itemCode: formValues.itemCode,
-      hsn: formValues.hsn,
-      salesPrice: formValues.salesPrice,
-      purchasePrice: formValues.purchasePrice,
-      mrp: formValues.mrp,
-      discount: formValues.discount,
-      taxslab: formValues.taxslab,
-      comment: formValues.comment,
-    };
     if (data) {
       dispatch(editItemAction({ id: data.id, ...formValues }));
     } else {
+      const singleItem = {
+        id: faker.datatype.uuid(),
+        categoryId: formValues.categoryId,
+        product: formValues.product,
+        quantity: formValues.quantity,
+        itemCode: formValues.itemCode,
+        hsn: formValues.hsn,
+        salesPrice: formValues.salesPrice,
+        purchasePrice: formValues.purchasePrice,
+        mrp: formValues.mrp,
+        discount: formValues.discount,
+        taxslab: formValues.taxslab,
+        comment: formValues.comment,
+      };
       dispatch(addItemAction(singleItem));
     }
 
@@ -172,9 +172,9 @@ const CreateItemModal = ({ data, visible, onCancel, onCloseModel }) => {
             rules={[{ required: true, message: "Please input Tax Slab!" }]}
           >
             <Select mode="multiple" placeholder="Tax Slab">
-              {taxSlabValues.map((x) => (
-                <Select.Option key={x} value={x}>
-                  {x}
+              {taxSlab.map((x) => (
+                <Select.Option key={x.id} value={x.id}>
+                  {x.name} ({x.value})
                 </Select.Option>
               ))}
             </Select>

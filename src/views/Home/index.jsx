@@ -1,4 +1,4 @@
-import { Button, Row, Col, InputNumber, message } from "antd";
+import { Button, Row, Col, InputNumber, Input, message, Space } from "antd";
 import React, { useState } from "react";
 import faker from "faker";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,8 @@ const Home = () => {
   const [catNumber, setCatNumber] = useState(1);
   const [taxNumber, setTaxNumber] = useState(1);
 
-  
+  const { categories, taxSlab } = useSelector((state) => state);
+
   const loadCategoriesFromFaker = () => {
     if (catNumber) {
       const newcategories = [];
@@ -34,7 +35,7 @@ const Home = () => {
         newcategories.push(singleCat);
       }
       dispatch(addCategoryBulkAction(newcategories));
-      message.success('Category(s) Added Successfully');
+      message.success("Category(s) Added Successfully");
     }
   };
 
@@ -44,8 +45,9 @@ const Home = () => {
       for (let i = 0; i < taxNumber; i++) {
         const singleTxt = {
           id: faker.datatype.uuid(),
-          name: faker.company.companyName(),
-          value: taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          name: faker.finance.transactionType(),
+          value:
+            taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
         };
         newtextslab.push(singleTxt);
       }
@@ -59,7 +61,8 @@ const Home = () => {
       for (let i = 0; i < itemNumber; i++) {
         const singleItem = {
           id: faker.datatype.uuid(),
-          categoryId:categories[Math.floor(Math.random() * categories.length)].id,
+          categoryId:
+            categories[Math.floor(Math.random() * categories.length)].id,
           product: faker.commerce.product(),
           quantity: faker.datatype.number(),
           itemCode: faker.datatype.string(),
@@ -68,81 +71,62 @@ const Home = () => {
           purchasePrice: faker.commerce.price(),
           mrp: faker.commerce.price(),
           discount: faker.datatype.float(),
-          taxslab:
-            taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          taxslab: [taxSlab[Math.floor(Math.random() * taxSlab.length)].value],
           comment: faker.lorem.sentence(),
         };
         newitems.push(singleItem);
       }
       dispatch(addItemBulkAction(newitems));
-      message.success('Item(s) Added Successfully');
+      message.success("Item(s) Added Successfully");
     }
   };
 
-  const { categories } = useSelector((state) => state);
   return (
     <div className="py-5 px-8">
-      <Row className="mb-5">
-        <Col lg={6} md={12} sm={24}>
-          <div className="d-flex mb-5">
-            <InputNumber
-              className="mr-2"
-              min={1}
-              value={catNumber}
-              onChange={(value) => setCatNumber(value)}
-            />
-            <Button onClick={loadCategoriesFromFaker}>
-              Load Categories faker
-            </Button>
-          </div>
+      <div className="d-flex flex-wrap justify-space-between mb-5">
+        <div>
+          <InputNumber
+            min={1}
+            value={catNumber}
+            onChange={(value) => setCatNumber(value)}
+          />
+          <Button onClick={loadCategoriesFromFaker}>
+            Load Categories faker
+          </Button>
+        </div>
 
-          <div className="d-flex mb-5">
-            <InputNumber
-              className="mr-2"
-              min={1}
-              value={taxNumber}
-              onChange={(value) => setTaxNumber(value)}
-            />
-            <Button onClick={loadTextslabFromFaker}>
-              Load TaxSlab faker
-            </Button>
-          </div>
+        <div>
+          <InputNumber
+            min={1}
+            value={taxNumber}
+            onChange={(value) => setTaxNumber(value)}
+          />
+          <Button onClick={loadTextslabFromFaker}>Load TaxSlab faker</Button>
+        </div>
 
-          {!!categories.length && (
-            <div className="d-flex mb-5">
-              <InputNumber
-                className="mr-2"
-                min={1}
-                value={itemNumber}
-                onChange={(value) => setItemNumber(value)}
-              />
-              <Button onClick={loadItemsFromFaker}>Load Items faker</Button>
-            </div>
-          )}
-          <div className="d-flex">
-            <Button className="mr-2" onClick={() => setIsCatModalVisible(true)}>
-              Add Category
-            </Button>
-            <Button className="mr-2" onClick={() => setIsItemModalVisible(true)}>
-              Add Item
-            </Button>
-            <Button onClick={() => setIsSlabModalVisible(true)}>
-              Add TaxSlab
-            </Button>
+        {!!categories.length && (
+          <div>
+            <InputNumber
+              min={1}
+              value={itemNumber}
+              onChange={(value) => setItemNumber(value)}
+            />
+            <Button onClick={loadItemsFromFaker}>Load Items faker</Button>
           </div>
-        </Col>
-        <Col lg={18} md={12} sm={24}>
+        )}
+
+        <Button onClick={() => setIsCatModalVisible(true)}>Add Category</Button>
+        <Button onClick={() => setIsItemModalVisible(true)}>Add Item</Button>
+        <Button onClick={() => setIsSlabModalVisible(true)}>Add TaxSlab</Button>
+      </div>
+      <Row>
+        <Col lg={12} md={12} sm={24}>
           <CategoriesList />
         </Col>
-      </Row>
-
-      <Row className="mb-5">
-        <Col span={18}>
+        <Col lg={12} md={12} sm={24}>
           <TextslabList />
         </Col>
       </Row>
-
-   
 
       <ItemsTable />
       <CreateCatModal
