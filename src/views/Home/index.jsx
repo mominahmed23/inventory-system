@@ -6,6 +6,7 @@ import { addItemBulkAction } from "../../redux/actions/items";
 import { addCategoryBulkAction } from "../../redux/actions/categories";
 import { taxSlabValues } from "../../utils/common";
 import CreateCatModal from "../../components/Forms/CreateCatModal";
+import CreateSlabModal from "../../components/Forms/CreateSlabModal";
 import CreateItemModal from "../../components/Forms/CreateItemModal";
 import CategoriesList from "../../components/Category/CategoriesList";
 
@@ -36,6 +37,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [isCatModalVisible, setIsCatModalVisible] = useState(false);
   const [isItemModalVisible, setIsItemModalVisible] = useState(false);
+  const [isSlabModalVisible, setIsSlabModalVisible] = useState(false);
   const [itemNumber, setItemNumber] = useState(1);
   const [catNumber, setCatNumber] = useState(1);
 
@@ -112,8 +114,11 @@ const Home = () => {
             <Button className="mr-2" onClick={() => setIsCatModalVisible(true)}>
               Add Category
             </Button>
-            <Button onClick={() => setIsItemModalVisible(true)}>
+            <Button className="mr-2" onClick={() => setIsItemModalVisible(true)}>
               Add Item
+            </Button>
+            <Button onClick={() => setIsSlabModalVisible(true)}>
+              Add TextSlab
             </Button>
           </div>
         </Col>
@@ -132,6 +137,11 @@ const Home = () => {
         visible={isItemModalVisible}
         onCancel={() => setIsItemModalVisible(false)}
         onCloseModel={setIsItemModalVisible}
+      />
+      <CreateSlabModal
+        visible={isSlabModalVisible}
+        onCancel={() => setIsSlabModalVisible(false)}
+        onCloseModel={setIsSlabModalVisible}
       />
     </div>
   );

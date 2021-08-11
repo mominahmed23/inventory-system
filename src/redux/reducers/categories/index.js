@@ -1,3 +1,5 @@
+/** @format */
+
 // **  Initial State
 const initialState = [];
 
