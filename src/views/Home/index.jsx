@@ -21,13 +21,22 @@ const columns = [
   {
     title: "Actions",
     render: (value) => (
-      <Button
-        onClick={() => {
-          console.log(value.id);
-        }}
-      >
-        Delete
-      </Button>
+      <>
+        <Button
+          onClick={() => {
+            console.log(value.id);
+          }}
+        >
+          Delete
+        </Button>
+        <Button
+          onClick={() => {
+            console.log(value.id);
+          }}
+        >
+          Edit
+        </Button>
+      </>
     ),
   },
 ];

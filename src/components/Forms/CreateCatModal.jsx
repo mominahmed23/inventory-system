@@ -2,18 +2,25 @@ import { Modal } from "antd";
 import { Form, Input, Button } from "antd";
 import React from "react";
 import faker from "faker";
-import { addCategoryAction } from "../../redux/actions/categories/index";
+import {
+  addCategoryAction,
+  editCategoryAction,
+} from "../../redux/actions/categories/index";
 import { useDispatch } from "react-redux";
 
-const CreateCatModal = ({ visible, onCancel, onCloseModel }) => {
+const CreateCatModal = ({ data, visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
 
   const submitCat = (formValues) => {
     const singleCat = {
       id: faker.datatype.uuid(),
-      name: formValues.catName,
+      name: formValues.name,
     };
-    dispatch(addCategoryAction(singleCat));
+    if (data) {
+      dispatch(editCategoryAction({ ...formValues, id: data.id }));
+    } else {
+      dispatch(addCategoryAction(singleCat));
+    }
     onCloseModel(false);
   };
 
@@ -25,10 +32,15 @@ const CreateCatModal = ({ visible, onCancel, onCloseModel }) => {
       visible={visible}
       onCancel={onCancel}
     >
-      <Form layout="vertical" name="Cat" onFinish={submitCat}>
+      <Form
+        initialValues={data}
+        layout="vertical"
+        name="Cat"
+        onFinish={submitCat}
+      >
         <Form.Item
           label="Category Name"
-          name="catName"
+          name="name"
           rules={[
             {
               required: true,
