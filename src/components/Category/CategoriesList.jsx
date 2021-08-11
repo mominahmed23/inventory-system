@@ -8,12 +8,13 @@ import CreateCatModal from "./../Forms/CreateCatModal";
 const CategoriesList = () => {
   const dispatch = useDispatch();
   const [isCatModalVisible, setIsCatModalVisible] = useState(false);
+  const [editCatVal, setEditCatVal] = useState(null);
   const { categories } = useSelector((state) => state);
   const delCat = (id) => {
     dispatch(deleteCategoryAction(id));
   };
-  const editCat = (id) => {
-    console.log(id);
+  const editCat = (i) => {
+    setEditCatVal(i);
     setIsCatModalVisible(true);
   };
   return (
@@ -23,10 +24,10 @@ const CategoriesList = () => {
         {categories.map((i) => (
           <Card
             key={i.id}
-            style={{ width: 150 }}
+            style={{ minWidth: 150 }}
             actions={[
               <DeleteOutlined onClick={() => delCat(i.id)} />,
-              <EditOutlined onClick={() => editCat(i.id)} />,
+              <EditOutlined onClick={() => editCat(i)} />,
             ]}
           > 
           <Typography.Title level={4}>{i.name}</Typography.Title>
@@ -35,6 +36,7 @@ const CategoriesList = () => {
       </Space>
       <CreateCatModal
         visible={isCatModalVisible}
+        data={editCatVal}
         onCancel={() => setIsCatModalVisible(false)}
         onCloseModel={setIsCatModalVisible}
       />

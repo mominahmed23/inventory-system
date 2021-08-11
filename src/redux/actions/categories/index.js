@@ -20,3 +20,10 @@ export const deleteCategoryAction = (id) => {
     payload: id,
   };
 };
+
+export const editCategoryAction = (data) => {
+  return {
+    type: "EDIT_CATEGORY",
+    payload: data,
+  };
+};
