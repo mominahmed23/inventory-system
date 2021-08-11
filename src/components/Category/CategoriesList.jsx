@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Typography, Card, Space } from "antd";
+import { Typography, Card, Space, message } from "antd";
 import { deleteCategoryAction } from "./../../redux/actions/categories/index";
 import CreateCatModal from "./../Forms/CreateCatModal";
 
@@ -12,6 +12,7 @@ const CategoriesList = () => {
   const { categories } = useSelector((state) => state);
   const delCat = (id) => {
     dispatch(deleteCategoryAction(id));
+    message.success('Category Deleted Successfully');
   };
   const editCat = (i) => {
     setEditCatVal(i);

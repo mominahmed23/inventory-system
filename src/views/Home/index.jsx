@@ -1,4 +1,4 @@
-import { Typography, Button, Row, Col, Table, InputNumber } from "antd";
+import { Typography, Button, Row, Col, Table, InputNumber, message } from "antd";
 import React, { useState } from "react";
 import faker from "faker";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +48,7 @@ const Home = () => {
   const [itemNumber, setItemNumber] = useState(1);
   const [catNumber, setCatNumber] = useState(1);
 
+  
   const loadCategoriesFromFaker = () => {
     if (catNumber) {
       const newcategories = [];
@@ -59,6 +60,7 @@ const Home = () => {
         newcategories.push(singleCat);
       }
       dispatch(addCategoryBulkAction(newcategories));
+      message.success('Category(s) Added Successfully');
     }
   };
   const loadItemsFromFaker = () => {
@@ -83,6 +85,7 @@ const Home = () => {
         newitems.push(singleItem);
       }
       dispatch(addItemBulkAction(newitems));
+      message.success('Item(s) Added Successfully');
     }
   };
 

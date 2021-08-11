@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import { Form, Input, Button } from "antd";
 import React from "react";
 import faker from "faker";
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 
 const CreateCatModal = ({ data, visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
-
+ 
   const submitCat = (formValues) => {
     const singleCat = {
       id: faker.datatype.uuid(),
@@ -18,8 +18,11 @@ const CreateCatModal = ({ data, visible, onCancel, onCloseModel }) => {
     };
     if (data) {
       dispatch(editCategoryAction({ ...formValues, id: data.id }));
+      message.success('Category Edited Successfully');
     } else {
       dispatch(addCategoryAction(singleCat));
+      message.success('Category Added Successfully');
+      
     }
     onCloseModel(false);
   };
