@@ -2,19 +2,19 @@ import { Modal } from "antd";
 import { Form, Input, Button } from "antd";
 import React from "react";
 import faker from "faker";
-import { addCategoryAction } from "../../redux/actions/categories/index";
+import { addtextslabAction } from "../../redux/actions/textslab/index";
 import { useDispatch } from "react-redux";
 
 const CreateSlabModal = ({ visible, onCancel, onCloseModel }) => {
   const dispatch = useDispatch();
 
   const submitText = (formValues) => {
-    const singleCat = {
+    const singletextslab = {
       id: faker.datatype.uuid(),
       name: formValues.textName,
       value: formValues.textValue,
     };
-    dispatch(addCategoryAction(singleCat));
+    dispatch(addtextslabAction(singletextslab));
     onCloseModel(false);
   };
 
@@ -28,7 +28,7 @@ const CreateSlabModal = ({ visible, onCancel, onCloseModel }) => {
     >
       <Form layout="vertical" name="TextSlab" onFinish={submitText}>
         <Form.Item
-          label="TextSLab Name"
+          label="TextSlab Name"
           name="textName"
           rules={[
             {
@@ -40,16 +40,16 @@ const CreateSlabModal = ({ visible, onCancel, onCloseModel }) => {
           <Input placeholder="TextSlab Name" />
         </Form.Item>
         <Form.Item
-          label="TextSLab Value"
+          label="TextSlab Value"
           name="textValue"
           rules={[
             {
               required: true,
-              message: "Please input TextSLab Value!",
+              message: "Please input TextSlab Value!",
             },
           ]}
         >
-          <Input placeholder="TextSLab Value" />
+          <Input placeholder="TextSlab Value" />
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit">Submit</Button>

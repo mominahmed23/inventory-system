@@ -9,6 +9,9 @@ import CreateCatModal from "../../components/Forms/CreateCatModal";
 import CreateSlabModal from "../../components/Forms/CreateSlabModal";
 import CreateItemModal from "../../components/Forms/CreateItemModal";
 import CategoriesList from "../../components/Category/CategoriesList";
+import TextslabList from "../../components/Textslab/TextslabList";
+import { addTextslabBulkAction } from "../../redux/actions/textslab";
+
 
 const columns = [
   {
@@ -40,6 +43,7 @@ const Home = () => {
   const [isSlabModalVisible, setIsSlabModalVisible] = useState(false);
   const [itemNumber, setItemNumber] = useState(1);
   const [catNumber, setCatNumber] = useState(1);
+  const [txtNumber, setTxtNumber] = useState(1);
 
   const loadCategoriesFromFaker = () => {
     if (catNumber) {
@@ -54,14 +58,29 @@ const Home = () => {
       dispatch(addCategoryBulkAction(newcategories));
     }
   };
+
+  const loadTextslabFromFaker = () => {
+    if (txtNumber) {
+      const newtextslab = [];
+      for (let i = 0; i < txtNumber; i++) {
+        const singleTxt = {
+          id: faker.datatype.uuid(),
+          name: faker.commerce.department(),
+          value: faker.datatype.number(),
+        };
+        newtextslab.push(singleTxt);
+      }
+      dispatch(addTextslabBulkAction(newtextslab));
+    }
+  };
+
   const loadItemsFromFaker = () => {
     if (itemNumber) {
       const newitems = [];
       for (let i = 0; i < itemNumber; i++) {
         const singleItem = {
           id: faker.datatype.uuid(),
-          categoryId:
-            categories[Math.floor(Math.random() * categories.length)].id,
+          categoryId:categories[Math.floor(Math.random() * categories.length)].id,
           product: faker.commerce.product(),
           quantity: faker.datatype.number(),
           itemCode: faker.datatype.string(),
@@ -70,8 +89,7 @@ const Home = () => {
           purchasePrice: faker.commerce.price(),
           mrp: faker.commerce.price(),
           discount: faker.datatype.float(),
-          taxSlab:
-            taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
+          taxSlab:taxSlabValues[Math.floor(Math.random() * taxSlabValues.length)],
         };
         newitems.push(singleItem);
       }
@@ -99,6 +117,18 @@ const Home = () => {
             </Button>
           </div>
 
+          <div className="d-flex mb-5">
+            <InputNumber
+              className="mr-2"
+              min={1}
+              value={txtNumber}
+              onChange={(value) => setTxtNumber(value)}
+            />
+            <Button onClick={loadTextslabFromFaker}>
+              Load TextSlab faker
+            </Button>
+          </div>
+
           {!!categories.length && (
             <div className="d-flex mb-5">
               <InputNumber
@@ -123,6 +153,13 @@ const Home = () => {
           </div>
         </Col>
       </Row>
+
+      <Row className="mb-5">
+        <Col span={18}>
+          <TextslabList />
+        </Col>
+      </Row>
+
       <Typography.Title level={3}>Items</Typography.Title>
       <div className="mb-5">
         <Table pagination={false} columns={columns} dataSource={items} />

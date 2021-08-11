@@ -28,8 +28,8 @@ const CategoriesList = () => {
               <DeleteOutlined onClick={() => delCat(i.id)} />,
               <EditOutlined onClick={() => editCat(i.id)} />,
             ]}
-          >
-            <Typography.Title level={4}>{i.name}</Typography.Title>
+          > 
+          <Typography.Title level={4}>{i.name}</Typography.Title>
           </Card>
         ))}
       </Space>
