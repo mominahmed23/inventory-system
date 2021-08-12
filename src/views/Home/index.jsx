@@ -83,42 +83,58 @@ const Home = () => {
 
   return (
     <div className="py-5 px-8">
-      <div className="d-flex flex-wrap justify-space-between mb-5">
-        <div>
-          <InputNumber
-            min={1}
-            value={catNumber}
-            onChange={(value) => setCatNumber(value)}
-          />
-          <Button onClick={loadCategoriesFromFaker}>
-            Load Categories faker
-          </Button>
-        </div>
+      <Row gutter={[24, 8]}>
+        <Col lg={16} md={24} sm={24}>
+          <div className="d-flex flex-wrap justify-space-between">
+            <div>
+              <InputNumber
+                min={1}
+                value={catNumber}
+                onChange={(value) => setCatNumber(value)}
+              />
+              <Button onClick={loadCategoriesFromFaker}>
+                Load Categories faker
+              </Button>
+            </div>
 
-        <div>
-          <InputNumber
-            min={1}
-            value={taxNumber}
-            onChange={(value) => setTaxNumber(value)}
-          />
-          <Button onClick={loadTextslabFromFaker}>Load TaxSlab faker</Button>
-        </div>
+            <div>
+              <InputNumber
+                min={1}
+                value={taxNumber}
+                onChange={(value) => setTaxNumber(value)}
+              />
+              <Button onClick={loadTextslabFromFaker}>
+                Load TaxSlab faker
+              </Button>
+            </div>
 
-        {!!categories.length && (
-          <div>
-            <InputNumber
-              min={1}
-              value={itemNumber}
-              onChange={(value) => setItemNumber(value)}
-            />
-            <Button onClick={loadItemsFromFaker}>Load Items faker</Button>
+            {!!categories.length && (
+              <div>
+                <InputNumber
+                  min={1}
+                  value={itemNumber}
+                  onChange={(value) => setItemNumber(value)}
+                />
+                <Button onClick={loadItemsFromFaker}>Load Items faker</Button>
+              </div>
+            )}
           </div>
-        )}
+        </Col>
+        <Col lg={8} md={24} sm={24}>
+          <div className="d-flex flex-wrap justify-space-between">
+            <Button onClick={() => setIsCatModalVisible(true)}>
+              Add Category
+            </Button>
+            <Button onClick={() => setIsItemModalVisible(true)}>
+              Add Item
+            </Button>
+            <Button onClick={() => setIsSlabModalVisible(true)}>
+              Add TaxSlab
+            </Button>
+          </div>
+        </Col>
+      </Row>
 
-        <Button onClick={() => setIsCatModalVisible(true)}>Add Category</Button>
-        <Button onClick={() => setIsItemModalVisible(true)}>Add Item</Button>
-        <Button onClick={() => setIsSlabModalVisible(true)}>Add TaxSlab</Button>
-      </div>
       <Row>
         <Col lg={12} md={12} sm={24}>
           <CategoriesList />
