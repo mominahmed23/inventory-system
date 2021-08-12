@@ -1,11 +1,15 @@
 import { Modal } from "antd";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import React from "react";
 import faker from "faker";
-import { addtextslabAction , editTaxAction } from "../../redux/actions/textslab/index";
+import { taxSlabValues } from "../../utils/common";
+import { addtextslabAction, editTaxAction } from "../../redux/actions/textslab/index";
 import { useDispatch } from "react-redux";
 
-const CreateSlabModal = ({ visible, onCancel, onCloseModel , data }) => {
+
+
+const { Option } = Select;
+const CreateSlabModal = ({ visible, onCancel, onCloseModel, data }) => {
   console.log(data)
   const dispatch = useDispatch();
 
@@ -16,7 +20,7 @@ const CreateSlabModal = ({ visible, onCancel, onCloseModel , data }) => {
       value: formValues.value,
     };
     if (data) {
-      dispatch(editTaxAction({id: data.id, ...formValues}));
+      dispatch(editTaxAction({ id: data.id, ...formValues }));
     } else {
       dispatch(addtextslabAction(singleTaxSlab));
     }
@@ -54,7 +58,15 @@ const CreateSlabModal = ({ visible, onCancel, onCloseModel , data }) => {
             },
           ]}
         >
-          <Input placeholder="TaxSlab Value" />
+          <Select
+            placeholder="Select a option and change input text above"
+            mode="multiple"
+
+          >
+            {taxSlabValues.map((x)=><Option value={x}>{x}</Option>)}
+
+          </Select>
+
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit">Submit</Button>
